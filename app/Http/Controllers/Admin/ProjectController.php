@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProjectRequest;
 
 //Models
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 
 // Helpers
@@ -36,8 +37,11 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
+
         return view('admin.projects.create', [
-            'types'=>$types
+            'types'=>$types,
+            'technologies'=>$technologies,
         ]);
     }
 
@@ -57,6 +61,13 @@ class ProjectController extends Controller
         }
 
         $newProject = Project::create($data);
+
+        if(array_key_exists('technologies', $data)) {
+            foreach ($data['technologies'] as $techId) {
+                $newProject->technologies()->sync($data['technologies']);
+            }
+        }
+
         return redirect()->route('admin.projects.show', $newProject->id)->with('success', 'New project created correctly');
     }
 
@@ -82,9 +93,12 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
+
         return view('admin.projects.edit', [
             'project'=> $project,
-            'types'=> $types
+            'types'=> $types,
+            'technologies'=> $technologies,
         ]);
     }
 
@@ -109,6 +123,14 @@ class ProjectController extends Controller
         }
 
         $project->update($data);
+
+        if(array_key_exists('technologies', $data)) {
+            $project->technologies()->sync($data['technologies']);
+        }
+        else {
+            $project->technologies()->detach();
+        }
+
         return redirect()->route('admin.projects.show', $project->id)->with('success', 'Project update correctly');
     }
 

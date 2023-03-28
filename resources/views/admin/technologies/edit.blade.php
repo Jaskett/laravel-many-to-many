@@ -1,18 +1,20 @@
 @extends('layouts.admin')
 
-@section('page_name') | New Type  @endsection
+@section('page_name') | Edit technology {{ $technology->name }}  @endsection
 
 @section('content')
 <div class="container-fluid mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Create new type</h1>
+            <h1>Edit technology</h1>
+            <h3>{{ $technology->name }}</h3>
             <form
-                action="{{ route('admin.types.store') }}"
+                action="{{ route('admin.technologies.update', $technology->id) }}"
                 method="POST"
                 class="mt-5"
             >
                 @csrf
+                @method('PUT')
 
                 <div class="mb-3 row">
                     <label for="name" class="col-form-label col-2">
@@ -24,7 +26,7 @@
                             id="name"
                             name="name"
                             class="form-control @error ('name') is-invalid @enderror"
-                            value="{{ old('name') }}"
+                            value="{{ old('name', $technology->name) }}"
                             max="255"
                             required
                         >
@@ -34,13 +36,11 @@
                     </div>
                 </div>
 
-
-
                 <div class="btn-box mt-5">
-                    <a href="{{ route('admin.types.index') }}" class="btn btn-warning text-light">
+                    <a href="{{ route('admin.technologies.index') }}" class="btn btn-warning text-light">
                         <i class="fa-solid fa-rotate-left"></i>
                     </a>
-                    <button type="submit" class="btn btn-success">Create</button>
+                    <button type="submit" class="btn btn-success">Edit</button>
                 </div>
 
             </form>

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
-@section('page_name') | New Type  @endsection
+@section('page_name') | New Technology  @endsection
 
 @section('content')
 <div class="container-fluid mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Create new type</h1>
+            <h1>Create new technology</h1>
             <form
-                action="{{ route('admin.types.store') }}"
+                action="{{ route('admin.technologies.store') }}"
                 method="POST"
                 class="mt-5"
             >
@@ -37,7 +37,7 @@
 
 
                 <div class="btn-box mt-5">
-                    <a href="{{ route('admin.types.index') }}" class="btn btn-warning text-light">
+                    <a href="{{ route('admin.technologies.index') }}" class="btn btn-warning text-light">
                         <i class="fa-solid fa-rotate-left"></i>
                     </a>
                     <button type="submit" class="btn btn-success">Create</button>

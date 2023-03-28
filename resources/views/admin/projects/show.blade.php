@@ -46,6 +46,14 @@
                     <strong>Type:</strong>
                     <a href="{{ route('admin.types.show', $project->type->id)}}">{{ $project->type->name }}</a>
                 @endif
+                <div>
+                    @if (count($project->technologies) > 0)
+                        <strong>Technologies:</strong>
+                        @foreach ($project->technologies as $technology)
+                            <a href="{{ route('admin.technologies.show', $technology->id) }}">#{{$technology->name }}"</a>
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </div>

@@ -123,6 +123,35 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label class="col-form-label col-2">
+                        Technologies
+                    </label>
+                    <div class="col-10 d-flex align-items-center">
+                        @foreach ($technologies as $technology)
+                            <div class="form-check form-check-inline">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="technologies[]"
+                                    id="technology-{{ $technology->id }}"
+                                    value="{{ $technology->id }}"
+                                    {{ in_array($technology->id, old('technologies', $project->technologies()->pluck('id')->toArray())) ? 'checked' : '' }}
+                                >
+                                <label
+                                    class="form-check-label"
+                                    for="technology-{{ $technology->id }}"
+                                >
+                                    {{ $technology->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                        @error('technologies')
+                            <span class="d-block mt-2 text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="btn-box mt-5">
                     <a href="{{ route('admin.projects.index') }}" class="btn btn-warning text-light">
                         <i class="fa-solid fa-rotate-left"></i>
